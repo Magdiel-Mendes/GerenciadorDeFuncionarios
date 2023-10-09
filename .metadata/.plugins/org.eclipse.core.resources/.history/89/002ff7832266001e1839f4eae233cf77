@@ -1,0 +1,5 @@
+package com.mag.gerenciador.dao;
+
+public class FuncionarioDAO {
+
+}

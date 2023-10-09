@@ -1,0 +1,8 @@
+package com.mag.gerenciador.dao;
+
+public class FuncionarioDAO {
+	private String jdbcURL = "jdbc:mysql://localhost:3306/userdb?useSSL=false";
+	private String jdbcUsername = "root";
+	private String jdbcPassword = "9666";
+	private String jdbcDriver = "com.mysql.jdbc.Driver";
+}

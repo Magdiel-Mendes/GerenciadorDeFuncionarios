@@ -1,0 +1,16 @@
+package com.mag.gerenciador.dao;
+
+public class FuncionarioDAO {
+	private String jdbcURL = "jdbc:mysql://localhost:3306/funcionariodb?useSSL=false";
+	private String jdbcUsername = "root";
+	private String jdbcPassword = "9666";
+	private String jdbcDriver = "com.mysql.jdbc.Driver";
+	
+	private static final String INSERT_USERS_SQL = "INSERT INTO users" + "  (nome, email, cargo) VALUES "
+			+ " (?, ?, ?);";
+
+	private static final String SELECT_USER_BY_ID = "select id,nome,email,cargo from users where id =?";
+	private static final String SELECT_ALL_USERS = "select * from users";
+	private static final String DELETE_USERS_SQL = "delete from users where id = ?;";
+	private static final String UPDATE_USERS_SQL = "update funcionarios set nome = ?,email= ?, cargo =? where id = ?;";
+}

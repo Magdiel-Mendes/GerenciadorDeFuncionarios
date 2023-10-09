@@ -1,0 +1,8 @@
+package com.mag.gerenciador.bean;
+
+public class Funcionario {
+	private int id;
+	private string nome;
+	private string email;
+	private string cargo;
+}

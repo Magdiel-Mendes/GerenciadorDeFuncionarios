@@ -1,0 +1,5 @@
+package com.mag.gerenciador.model;
+
+public class Funcionario {
+
+}

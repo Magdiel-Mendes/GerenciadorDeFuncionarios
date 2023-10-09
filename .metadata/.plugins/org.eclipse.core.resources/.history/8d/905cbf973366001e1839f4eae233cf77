@@ -1,0 +1,124 @@
+package com.mag.gerenciador.web;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.mag.gerenciador.dao.FuncionarioDAO;
+import com.mag.gerenciador.model.Funcionario;
+
+
+
+
+/**
+ * ControllerServlet.java
+ * This servlet acts as a page controller for the application, handling all
+ * requests from the user.
+ * @email Ramesh Fadatare
+ */
+
+@WebServlet("/")
+public class FuncionarioServelet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private FuncionarioDAO funcionarioDAO;
+	
+	public void init() {
+		funcionarioDAO = new FuncionarioDAO();
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String action = request.getServletPath();
+
+		try {
+			switch (action) {
+			case "/new":
+				novoFuncionario(request, response);
+				break;
+			case "/insert":
+				criarFuncionario(request, response);
+				break;
+			case "/delete":
+				deletarFuncionario(request, response);
+				break;
+			case "/edit":
+				editarFuncionario(request, response);
+				break;
+			case "/update":
+				atualizarFuncionario(request, response);
+				break;
+			default:
+				listarFuncionarios(request, response);
+				break;
+			}
+		} catch (SQLException ex) {
+			throw new ServletException(ex);
+		}
+	}
+
+	private void listarFuncionarios(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		List<Funcionario> buscarFuncionario = funcionarioDAO.buscarFuncionarios();
+		request.setAttribute("listUser", buscarFuncionario);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("user-list.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	private void novoFuncionario(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	private void editarFuncionario(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+	    Funcionario	funcionario = funcionarioDAO.buscarFuncionario(id);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
+		request.setAttribute("funcionario", funcionario);
+		dispatcher.forward(request, response);
+
+	}
+
+	private void criarFuncionario(HttpServletRequest request, HttpServletResponse response) 
+			throws SQLException, IOException {
+		String nome = request.getParameter("name");
+		String email = request.getParameter("email");
+		String cargo = request.getParameter("country");
+		Funcionario funcionarioNovo = new Funcionario(nome, email, cargo);
+		funcionarioDAO.criarFuncionario(newUser);
+		response.sendRedirect("list");
+	}
+
+	private void atualizarFuncionario(HttpServletRequest request, HttpServletResponse response) 
+			throws SQLException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		String country = request.getParameter("country");
+
+		User book = new User(id, name, email, country);
+		userDAO.updateUser(book);
+		response.sendRedirect("list");
+	}
+
+	private void deletarFuncionario(HttpServletRequest request, HttpServletResponse response) 
+			throws SQLException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		userDAO.deleteUser(id);
+		response.sendRedirect("list");
+
+	}
+
+}

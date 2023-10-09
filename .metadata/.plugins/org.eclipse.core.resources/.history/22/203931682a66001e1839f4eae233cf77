@@ -1,0 +1,35 @@
+package com.mag.gerenciador.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class FuncionarioDAO {
+	private String jdbcURL = "jdbc:mysql://localhost:3306/funcionariodb?useSSL=false";
+	private String jdbcUsername = "root";
+	private String jdbcPassword = "9666";
+	private String jdbcDriver = "com.mysql.jdbc.Driver";
+	
+	private static final String INSERT_USERS_SQL = "INSERT INTO users" + "  (nome, email, cargo) VALUES "
+			+ " (?, ?, ?);";
+
+	private static final String SELECT_FUNCIONARIOS_BY_ID = "select id,nome,email,cargo from users where id =?";
+	private static final String SELECT_ALL_FUNCIONARIOS = "select * from users";
+	private static final String DELETE_FUNCIONARIOS_SQL = "delete from users where id = ?;";
+	private static final String UPDATE_FUNCIONARIOS__SQL = "update funcionarios set nome = ?,email= ?, cargo =? where id = ?;";
+
+	protected Connection getConnection() {
+		Connection connection = null;
+		try {
+			Class.forName("jdbcDriver");
+			connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return connection;
+	}
+}
