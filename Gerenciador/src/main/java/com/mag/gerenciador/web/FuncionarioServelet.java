@@ -60,12 +60,14 @@ public class FuncionarioServelet extends HttpServlet {
 	}
 
 	private void listarFuncionarios(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException, ServletException {
-		List<Funcionario> buscarFuncionario = funcionarioDAO.buscarFuncionarios();
-		request.setAttribute("buscarFuncionario", buscarFuncionario);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("listaFuncionario.jsp");
-		dispatcher.forward(request, response);
+	        throws SQLException, IOException, ServletException {
+	    List<Funcionario> buscarFuncionario = funcionarioDAO.buscarFuncionarios();
+
+	    request.setAttribute("buscarFuncionario", buscarFuncionario);
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("listaFuncionario.jsp");
+	    dispatcher.forward(request, response);
 	}
+
 
 	private void novoFuncionario(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -77,7 +79,7 @@ public class FuncionarioServelet extends HttpServlet {
 			throws SQLException, ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 	    Funcionario	funcionario = funcionarioDAO.buscarFuncionario(id);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("listaFuncionario.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("formFuncionario.jsp");
 		request.setAttribute("funcionario", funcionario);
 		dispatcher.forward(request, response);
 

@@ -46,12 +46,12 @@
 						<th>Nome</th>
 						<th>Email</th>
 						<th>cargo</th>
-						<th>Actions</th>
+						<th>Ações</th>
 					</tr>
 				</thead>
 				<tbody>
 				
-					<c:forEach var="func" items="${listarFuncionarios}">
+					<c:forEach var="func" items="${buscarFuncionario}">
 
 						<tr>
 							<td><c:out value="${func.id}" /></td>
